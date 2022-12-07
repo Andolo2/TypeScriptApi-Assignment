@@ -133,7 +133,35 @@ controller.route('/product/details/:articleNumber').get(async(httpRequest, httpR
 /*******Secured Routes***************Secured Routes***************Secured Routes***************Secured Routes***************Secured Routes********/
 
 
+controller.route('/').post(async(httpRequest, httpResponse) => {
 
+        const {name, description, price, category, tag, imageName, rating } = httpRequest.body
+        console.log(httpRequest.body);
+
+        if(!name || !price ){
+                httpResponse.status(400).json({Text: 'Name and price is required '})
+               
+        }
+        const product_exits = await productSchema.findOne({name})
+        if(product_exits){
+                httpResponse.status(409).json({ success: true, message: 'Can´t create duplicate '})
+        }else{
+                const product = await productSchema.create({
+                        name,
+                        description,
+                        price,
+                        category,
+                        tag,
+                        imageName,
+                        rating
+                })
+                if(product){
+                        httpResponse.status(201).json({success: true, message: `product with articlenumber ${product._id} was created`})
+                }else{
+                        httpResponse.status(400).json({success: true,message: 'Can´t create product '})
+                }
+        }
+})
 
 
 
