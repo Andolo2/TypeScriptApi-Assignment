@@ -155,7 +155,10 @@ controller.route("/:id") // http://localhost:5000/api/products/1
         httpResponse.status(404).json()
 })
 
+// Unsecured Routes
 
+
+// Secure routes
 
 
 module.exports = controller

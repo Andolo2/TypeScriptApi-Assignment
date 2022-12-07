@@ -13,15 +13,15 @@ const initMongoDB = require('./server-MONGO_DB')
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 //app.listen(cors, console.log(`cors is running ${cors}`))
 
 // Router/controllers
 
-const productsController = require('./controllers/productController')
-app.use('/api/products', productsController)
+const productsController_NEW = require('./controllers/productsController_NEW')
+app.use('/api/products', productsController_NEW)
 
 const usersController = require('./controllers/usersController')
 app.use('/api/users', usersController)
