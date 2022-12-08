@@ -133,16 +133,17 @@ controller.route('/product/details/:articleNumber').get(async(httpRequest, httpR
 /*******Secured Routes***************Secured Routes***************Secured Routes***************Secured Routes***************Secured Routes********/
 
 
-controller.route('/').post(async(httpRequest, httpResponse) => {
+/* Create product */
+controller.route('/').post(async(httpRequest, httpResponse) => { // Create a product
 
         const {name, description, price, category, tag, imageName, rating } = httpRequest.body
         console.log(httpRequest.body);
 
-        if(!name || !price ){
+        if(!name || !price ){ // name + price = required
                 httpResponse.status(400).json({Text: 'Name and price is required '})
                
         }
-        const product_exits = await productSchema.findOne({name})
+        const product_exits = await productSchema.findOne({name}) // If new product contais the same name, run status 409 or create a new product. 
         if(product_exits){
                 httpResponse.status(409).json({ success: true, message: 'Can´t create duplicate '})
         }else{
@@ -163,8 +164,28 @@ controller.route('/').post(async(httpRequest, httpResponse) => {
         }
 })
 
+/* delete product */
+
+controller.route('/:articleNumber').delete(async(httpRequest, httpResponse) => {
+        if(!httpRequest.params.articleNumber){
+                httpResponse.json(400).json({success: true, message: 'articlenumber not found.'})
+        }
+        else{
+                const product = await productSchema.findById(httpRequest.params.articleNumber)
 
 
+                if(product){
+                        await productSchema.remove(product)
+                        httpResponse.status(200).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was deleted.`})
+                }
+                else{
+                        httpResponse.status(404).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was not found.`})
+                }
+        }
+})
+   
+/* Update product */
 
+       
 
 module.exports = controller
