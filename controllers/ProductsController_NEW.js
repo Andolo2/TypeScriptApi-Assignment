@@ -137,7 +137,7 @@ controller.route('/product/details/:articleNumber').get(async(httpRequest, httpR
 controller.route('/').post(async(httpRequest, httpResponse) => { // Create a product
 
         const {name, description, price, category, tag, imageName, rating } = httpRequest.body
-        console.log(httpRequest.body);
+       
 
         if(!name || !price ){ // name + price = required
                 httpResponse.status(400).json({Text: 'Name and price is required '})
@@ -184,8 +184,64 @@ controller.route('/:articleNumber').delete(async(httpRequest, httpResponse) => {
         }
 })
    
-/* Update product */
 
+
+/* controller.route('/').put(async(httpRequest, httpResponse) => {
+        let result = await productSchema.updateOne(
+                
+                {articleNumber: httpRequest.params.articleNumber},
+               
+                {$set: httpRequest.body}
+                
+                
+        )
+ 
+        httpResponse.send(result)
+        
        
+}) */
+ 
+controller.route('/').put(async(httpRequest, httpResponse) => {
+        let result = await productSchema.updateOne(
+                
+                {articleNumber: httpRequest.params.articleNumber},
+               
+                {$set: httpRequest.body}
+                
+                
+        )
+ 
+        httpResponse.send(result)
+        
+       
+})
 
+/*   controller.route('/').put( async(httpRequest, httpResponse)=> {
+        productSchema.updateOne( 
+                {articleNumber: httpRequest.params.articleNumber},
+                {$set: httpRequest.body})
+
+          .then(() => httpResponse.status(200).json({ message: 'product updated.' }))
+          .catch(error => httpResponse.status(400).json({ error }));
+      });   */
+
+
+/*       
+      controller.route('/').put( async(httpRequest, httpResponse) => {
+try {
+        const product = await product.findByIdAndUpdate(
+                httpRequest.params.articleNumber,
+        {
+        $set: httpRequest.body,
+        },
+        { new: true }
+        );
+                httpResponse.status(200).json(product)
+                } catch (err) {
+                console.log("Can't update")
+                }
+      });
+ */
+
+      
 module.exports = controller
