@@ -1,4 +1,5 @@
 const express = require ('express')
+const { updateOne } = require('../schemas/productSchema_EXPRESS')
 const controller = express.Router()
 
 const productSchema = require('../schemas/productSchema_EXPRESS')
@@ -186,7 +187,7 @@ controller.route('/:articleNumber').delete(async(httpRequest, httpResponse) => {
    
 
 
-/* controller.route('/').put(async(httpRequest, httpResponse) => {
+/*    controller.route('/:articleNumber').put(async(httpRequest, httpResponse) => {
         let result = await productSchema.updateOne(
                 
                 {articleNumber: httpRequest.params.articleNumber},
@@ -199,49 +200,38 @@ controller.route('/:articleNumber').delete(async(httpRequest, httpResponse) => {
         httpResponse.send(result)
         
        
-}) */
- 
-controller.route('/').put(async(httpRequest, httpResponse) => {
-        let result = await productSchema.updateOne(
-                
-                {articleNumber: httpRequest.params.articleNumber},
-               
-                {$set: httpRequest.body}
-                
-                
-        )
- 
-        httpResponse.send(result)
-        
-       
-})
-
-/*   controller.route('/').put( async(httpRequest, httpResponse)=> {
-        productSchema.updateOne( 
-                {articleNumber: httpRequest.params.articleNumber},
-                {$set: httpRequest.body})
-
-          .then(() => httpResponse.status(200).json({ message: 'product updated.' }))
-          .catch(error => httpResponse.status(400).json({ error }));
-      });   */
+})  */
+   
 
 
-/*       
-      controller.route('/').put( async(httpRequest, httpResponse) => {
-try {
-        const product = await product.findByIdAndUpdate(
-                httpRequest.params.articleNumber,
-        {
-        $set: httpRequest.body,
-        },
-        { new: true }
-        );
-                httpResponse.status(200).json(product)
-                } catch (err) {
-                console.log("Can't update")
+controller.route('/:articleNumber').put(async(httpRequest, httpResponse) => {
+        if(!httpRequest.params.articleNumber){
+                httpResponse.json(400).json({success: true, message: 'articlenumber not found.'})
+        }
+        else{
+                const product = await productSchema.findById(httpRequest.params.articleNumber)
+                const {name} = httpRequest.body
+
+
+                if(product){
+                        await productSchema.findByIdAndUpdate(
+                                httpRequest.params.articleNumber, httpRequest.body, {
+                                        name: httpRequest.body.name
+                                }
+                                
+                                )
+                                httpResponse.status(200).json()
+                                console.log('kör1')
+                                
                 }
-      });
- */
+                else{
+                        httpResponse.status(404).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was not found.`})
+                }
+        }
+})
+   
+ 
+
 
       
 module.exports = controller

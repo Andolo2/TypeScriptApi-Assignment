@@ -26,9 +26,9 @@ const products = [ // https://win22imgstorage.blob.core.windows.net/images/ link
     {tag: "showcaseBottom",  articleNumber: "a8bb0550-734d-11ed-a1eb-0242ac120002", name: "T-shirt", description: "", category: "Coats", price: 199, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/multicolor-tshirt.png" },
     {tag: "showcaseBottom",  articleNumber: "a8bb071c-734d-11ed-a1eb-0242ac120002", name: "Pruple Handbag", description: "", category: "Coats", price: 799, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/purple-bag.png" },
     {tag: "showcaseBottom",  articleNumber: "a8bb08ac-734d-11ed-a1eb-0242ac120002", name: "Red Handbag", description: "", category: "Coats", price: 899, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/red-bag.png" },
-    {tag: "",  articleNumber: "a8bb0a32-734d-11ed-a1eb-0242ac120002", name: "Red Dress", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/red-dress.png" },
-    {tag: "",  articleNumber: "a8bb0be0-734d-11ed-a1eb-0242ac120002", name: "Striped Top", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/striped-top.png" },
-    {tag: "",  articleNumber: "a8bb0d84-734d-11ed-a1eb-0242ac120002", name: "Striped Pants", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/striped-pants.png" },
+    {tag: "latestProd",  articleNumber: "a8bb0a32-734d-11ed-a1eb-0242ac120002", name: "Red Dress", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/red-dress.png" },
+    {tag: "latestProd",  articleNumber: "a8bb0be0-734d-11ed-a1eb-0242ac120002", name: "Striped Top", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/striped-top.png" },
+    {tag: "latestProd",  articleNumber: "a8bb0d84-734d-11ed-a1eb-0242ac120002", name: "Striped Pants", description: "", category: "Coats", price: 59, rating: 3, imageName:"https://win22imgstorage.blob.core.windows.net/images/striped-pants.png" },
 
     
 
