@@ -1,5 +1,4 @@
 const express = require ('express')
-const { updateOne } = require('../schemas/productSchema_EXPRESS')
 const controller = express.Router()
 
 const productSchema = require('../schemas/productSchema_EXPRESS')
@@ -8,7 +7,7 @@ const productSchema = require('../schemas/productSchema_EXPRESS')
 /****Unsecured Routes********Unsecured Routes********Unsecured Routes********Unsecured Routes********Unsecured Routes********Unsecured Routes****/ 
 
 // Unsecured Routes
-controller.route('/').get(async (httpRequest, httpResponse) =>  {
+controller.route('/').get(async (httpRequest, httpResponse) =>  { // List all products
 
         const products = []
 
@@ -17,7 +16,7 @@ controller.route('/').get(async (httpRequest, httpResponse) =>  {
                 
                 for( let product of productList){
                         products.push({
-                                articleNumber: product._id,
+                                articleNumber: product._id, // SetarticleNumber to match _ID from mongoDB.
                                 name: product.name,
                                 description: product.description,
                                 price: product.price,
@@ -187,45 +186,28 @@ controller.route('/:articleNumber').delete(async(httpRequest, httpResponse) => {
    
 
 
-/*    controller.route('/:articleNumber').put(async(httpRequest, httpResponse) => {
-        let result = await productSchema.updateOne(
-                
-                {articleNumber: httpRequest.params.articleNumber},
-               
-                {$set: httpRequest.body}
-                
-                
-        )
- 
-        httpResponse.send(result)
-        
-       
-})  */
-   
-
+/*Update Product*/
 
 controller.route('/:articleNumber').put(async(httpRequest, httpResponse) => {
-        if(!httpRequest.params.articleNumber){
+        if(!httpRequest.params.articleNumber){ /*If an articleNumber is not found, return 400 */
                 httpResponse.json(400).json({success: true, message: 'articlenumber not found.'})
         }
         else{
-                const product = await productSchema.findById(httpRequest.params.articleNumber)
-                const {name} = httpRequest.body
+                const product = await productSchema.findById(httpRequest.params.articleNumber) /*Use findbyID to find correct articleNumber */
+                const {articleNumber} = httpRequest.body
 
 
-                if(product){
-                        await productSchema.findByIdAndUpdate(
+                if(product){ /*If a product is found, this will run */
+                        await productSchema.findByIdAndUpdate( /* Creates a findOneAndUpdate query, filtering by the given _id.*/
                                 httpRequest.params.articleNumber, httpRequest.body, {
-                                        name: httpRequest.body.name
+                                        articleNumber: httpRequest.body.articleNumber
                                 }
                                 
                                 )
-                                httpResponse.status(200).json()
-                                console.log('kör1')
-                                
+                                httpResponse.status(200).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was updated.`}) // If true, product is updated.                        
                 }
                 else{
-                        httpResponse.status(404).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was not found.`})
+                        httpResponse.status(400).json({success: true, message: `product with articlenumber ${httpRequest.params.articleNumber} was not found.`}) // if not, return 400
                 }
         }
 })

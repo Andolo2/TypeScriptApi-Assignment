@@ -23,8 +23,7 @@ app.use(bodyParser.json())
 const productsController_NEW = require('./controllers/productsController_NEW')
 app.use('/api/products', productsController_NEW)
 
-const usersController = require('./controllers/usersController')
-app.use('/api/users', usersController)
+
 
 
 // Start API`ss

@@ -4,18 +4,11 @@ const initMongoDB = async () => {
 
     try{
         const conn = await mongoose.connect(process.env.MONGODB_URI)
-        console.log(`MongoDB is running: ${conn.connection.host}`)
-
-        
+        console.log(`MongoDB is running: ${conn.connection.host}`)   
     }
     catch{
-       
+       console.log('DB is not running')
     }
-
-	
-
-    
-
 }
 
 /*|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*/ 
